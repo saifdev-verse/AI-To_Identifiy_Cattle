@@ -1,6 +1,6 @@
 .venv/
 __pycache__/
-Backend/model/Hack_ResNet50_model.pth.pth
-D:\HackState\Backend\__pycache__\main.cpython-313.pyc
+Backend/model/Hack_ResNet50_model.pth
+__pycache__\main.cpython-313.pyc
 data.env
 *.zip
