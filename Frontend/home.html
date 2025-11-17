@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cattle Breed App for Automated Identification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="google" content="notranslate">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #e6e9ff);
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    
+    #google_translate_element {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 2000;
+      background: rgba(255,255,255,0.8);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .goog-te-banner-frame.skiptranslate, 
+    .goog-te-gadget-icon 
+    {
+      display: none !important;
+    }
+
+    body {
+      top: 0 !important;
+    }
+
+    #google_translate_element select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #777;
+      font-size: 14px;
+      background: white;
+    }
+
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    #logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+      color: #222;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #5d5efc;
+    }
+
+    
+    .container1 {
+      background: linear-gradient(135deg, #dde6ff, #f7f8ff);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 8rem;
+      padding-top: 5rem;
+    }
+
+    .content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 4rem;
+      color: #1e1e1e;
+      line-height: 1.1;
+    }
+
+    #green {
+      color: #7ed957;
+    }
+
+    .content p {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    #demo {
+      display: inline-block;
+      margin-top: 2rem;
+      background: #5d5efc;
+      color: white;
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    #demo:hover {
+      background: #7a7bff;
+      transform: scale(1.05);
+    }
+
+    
+    .main1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6rem;
+      padding: 6rem 3rem;
+      background: white;
+    }
+
+    #cattle {
+      width: 380px;
+      height: auto;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .right_1 h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      color: #2c2c2c;
+    }
+
+    #p {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    
+    .main2 {
+      padding: 6rem 3rem;
+      background: #f7f8ff;
+    }
+
+    .main_top2 h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.3rem;
+      color: #222;
+    }
+
+    #p_2 {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .main3 {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .box {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      text-align: left;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .box img {
+      width: 40px;
+    }
+
+    .h1_box {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem;
+      margin-top: 0.8rem;
+      color: #2b2b2b;
+    }
+
+    .p_box {
+      margin-top: 0.6rem;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    
+    .main_4 {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    #h2_4 {
+      display: inline-block;
+      background: #e6ebff;
+      padding: 1.5rem 2.5rem;
+      border-radius: 2rem;
+      font-size: 1.4rem;
+      color: #222;
+    }
+
+    #a_4 {
+      color: #5d5efc;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 0.5rem;
+    }
+
+    
+    .main4 {
+      padding: 5rem 3rem;
+      background: white;
+    }
+
+    .top_4 h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.2rem;
+      color: #2b2b2b;
+    }
+
+    #p_4 {
+      margin-top: 1rem;
+      color: #555;
+    }
+
+    .bottom_4 {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .bottom_4 img {
+      width: 260px;
+      border-radius: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .bottom_4 img:hover {
+      transform: scale(1.05);
+    }
+
+    
+    .main6 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5rem;
+      padding: 5rem 3rem;
+      background: #f7f8ff;
+      flex-wrap: wrap;
+    }
+
+    #img_6 {
+      width: 380px;
+      height: auto;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .h1_ul {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      color: #5d5efc;
+    }
+
+    #ol {
+      margin-top: 1rem;
+      color: #333;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    footer {
+      background: #5d5efc;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1rem;
+      margin-top: 3rem;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .container1 {
+        padding: 5rem 2rem;
+        align-items: center;
+        text-align: center;
+      }
+
+      .main1 {
+        flex-direction: column;
+        gap: 3rem;
+      }
+
+      .main6 {
+        flex-direction: column;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  
+  <div id="google_translate_element"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div>
+      <img id="logo" src="./assets/Logo.jpeg" alt="Logo">
+    </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="mailto:shaikmohammadyousuf10@gmail.com">Email</a>
+      <a href="tel:9010384433">Contact</a>
+    </div>
+
+    
+  </nav>
+
+  <!-- HERO -->
+  <section class="container1" id="home">
+    <div class="content">
+      <h1 id="green">Cattle</h1>
+      <h1>Breed Recognition System</h1>
+      <p>Automated cattle identification technology powered by AI to classify cattle breeds with precision and enhanced tracking.</p>
+      <a id="demo" href="test.html">Get Classification</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="main1">
+    <img id="cattle" src="./assets/img7.jpeg" alt="cattle">
+    <div class="right_1">
+      <h1>Expert Cattle</h1>
+      <h1>Breed App</h1>
+      <p id="p">Cattle breed identification allows the livestock industry to identify, label, and accurately classify cattle into their respective groups.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="main2" id="about">
+    <div class="main_top2">
+      <h1>Key Features of Cattle Breed</h1>
+      <h1>Identification App</h1>
+      <p id="p_2">Cattle breed identification allows the livestock industry to identify, label, and accurately classify cattle into their respective groups.</p>
+    </div>
+
+    <div class="main3">
+      <div class="box">
+        <img src="./assets/analize.jpeg" alt="logo">
+        <h1 class="h1_box">Automatic Identification</h1>
+        <p class="p_box">An automatic identification of cattle from images, videos, or live feeds in real time.</p>
+      </div>
+
+      <div class="box">
+        <img src="./assets/data.jpeg" alt="logo">
+        <h1 class="h1_box">Multiple Breeds Recognition</h1>
+        <p class="p_box">It can distinguish and categorize the different types of cattle: dairy, beef, and hybrids.</p>
+      </div>
+
+      <div class="box">
+        <img src="./assets/acc.jpeg" alt="logo">
+        <h1 class="h1_box">High Precision</h1>
+        <p class="p_box">A high-precision system prevents errors and incorrect identifications of cattle breeds.</p>
+      </div>
+
+      <div class="box">
+        <img src="./assets/process.jpeg" alt="logo">
+        <h1 class="h1_box">Scalability</h1>
+        <p class="p_box">An automatic identification of cattle from images, videos, or live feeds in real time.</p>
+      </div>
+
+      <div class="box">
+        <img src="./assets/shift.jpeg" alt="logo">
+        <h1 class="h1_box">Easy Integration</h1>
+        <p class="p_box">Provides support for deployment over different large livestock operations and devices.</p>
+      </div>
+
+      <div class="box">
+        <img src="./assets/output.jpeg" alt="logo">
+        <h1 class="h1_box">AI and ML Support</h1>
+        <p class="p_box">Uses artificial intelligence and machine learning for better accuracy in breed identification.</p>
+      </div>
+    </div>
+
+    <div class="main_4">
+      <h2 id="h2_4">
+        Can't decide which breed to choose?
+        <a id="a_4" href="comparison.html">Compare Now!</a>
+      </h2>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="main4">
+    <div class="top_4">
+      <h1>Advanced Cattle Breed</h1>
+      <h1>Identification</h1>
+      <p id="p_4">Accurate breed identification and leveraging of emerging technologies in classification.</p>
+    </div>
+    <div class="bottom_4">
+      <img src="./assets/img4.jpeg" alt="">
+      <img src="./assets/img5.jpeg" alt="">
+      <img src="./assets/img2.jpeg" alt="">
+      <img src="./assets/img3.jpeg" alt="">
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main6">
+    <img id="img_6" src="./assets/img6.jpeg" alt="">
+    <div class="ul">
+      <h1 class="h1_ul">Choose Our Cattle</h1>
+      <h1 class="h1_ul">Breed App</h1>
+      <ol id="ol">
+        <li>Real-Time Identification</li>
+        <li>Breed Classification</li>
+        <li>Multi-Breed Recognition</li>
+        <li>Customizable Identification</li>
+        <li>Edge Processing</li>
+        <li>Cloud Integration</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2025 HackState. All rights reserved.
+  </footer>
+
+  <!-- Google Translate Dropdown -->
+    <div id="google_translate_element" style="position: absolute; top: 20px; right: 20px;"></div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'en,hi,ta,te,ml,kn,gu,mr,pa,bn,ur,as,ne,fr,de,es,ar', // Add any languages you want
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        },
+        'google_translate_element'
+      );
+    }
+    </script>
+
+    <script type="text/javascript" 
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
+
+</body>
+</html>

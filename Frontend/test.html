@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indian Livestock Breed Identifier</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="google" content="notranslate">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      min-height: 100vh;
+      color: #1a1a1a;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow-x: hidden;
+      padding: 20px 10px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+
+    .back-link:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateX(-5px);
+    }
+    
+    
+    .bg-animation {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+     
+     #google_translate_element {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 2000;
+      background: rgba(255,255,255,0.8);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .goog-te-banner-frame.skiptranslate, 
+    .goog-te-gadget-icon 
+    {
+      display: none !important;
+    }
+
+    body {
+      top: 0 !important;
+    }
+
+    #google_translate_element select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #777;
+      font-size: 14px;
+      background: white;
+    }
+
+    .particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    /* Navigation button */
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      margin: 20px 0;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Upload Card */
+    .upload-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      text-align: center;
+      animation: fadeInUp 0.8s ease;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .upload-zone {
+      border: 3px dashed #d0d0d0;
+      border-radius: 16px;
+      padding: 40px 20px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: #fafafa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-zone:hover {
+      border-color: #667eea;
+      background: #f5f3ff;
+      transform: scale(1.02);
+    }
+
+    .upload-zone.drag-over {
+      border-color: #667eea;
+      background: #f5f3ff;
+      transform: scale(1.02);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      opacity: 0.6;
+    }
+
+    .upload-text {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .upload-text strong {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .preview-container {
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .preview-img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      animation: zoomIn 0.5s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 10px;
+      right: calc(50% - 175px);
+      background: rgba(255, 59, 48, 0.95);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .remove-btn:hover {
+      background: rgba(255, 59, 48, 1);
+      transform: scale(1.1);
+    }
+
+    .predict-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .predict-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+    }
+
+    .predict-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      border: 3px solid rgba(102, 126, 234, 0.2);
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Results Container */
+    #results-container {
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      animation: slideInLeft 0.6s ease;
+      border-left: 5px solid #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .result-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .result-card h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+
+    .confidence-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .info-item {
+      background: linear-gradient(135deg, #f5f3ff 0%, #faf5ff 100%);
+      padding: 18px;
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .info-item:hover::before {
+      opacity: 1;
+    }
+
+    .info-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .info-item strong {
+      color: #764ba2;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .info-item span {
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .loading-card {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .loading-text {
+      color: #667eea;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    .error-card {
+      background: rgba(255, 59, 48, 0.95);
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(255, 59, 48, 0.3);
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.95rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .upload-card {
+        padding: 30px 20px;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .remove-btn {
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-animation" id="particles"></div>
+
+  <div class="container">
+    <a href="home.html" class="back-link">← Back to Home</a>
+    <header>
+      <h1>🐄 Livestock Breed Identifier</h1>
+      <p class="subtitle">Identify Indian livestock breeds instantly with AI</p>
+      <a href="comparison.html" class="nav-btn">
+        ⚖ Compare Breeds
+      </a>
+    </header>
+
+    <div class="upload-card">
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('imageInput').click()">
+        <div class="upload-icon">📸</div>
+        <div class="upload-text">
+          <strong>Click to upload</strong> or drag and drop<br>
+          <small style="color: #999;">PNG, JPG up to 10MB</small>
+        </div>
+      </div>
+      <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)" />
+      <div id="preview" class="preview-container"></div>
+      <button class="predict-btn" id="predictBtn" onclick="uploadImage()">
+        <span>🔍</span>
+        <span>Identify Breed</span>
+      </button>
+    </div>
+
+    <div id="results-container"></div>
+
+    <footer>
+      <div>🌾 Powered by Advanced AI Technology</div>
+      <div style="margin-top: 8px; opacity: 0.8;">Empowering Agriculture Through Innovation</div>
+    </footer>
+  </div>
+
+  <script>
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.width = Math.random() * 10 + 5 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    let selectedFile = null;
+    const uploadZone = document.getElementById('uploadZone');
+
+    // Drag and drop handlers
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('drag-over');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        document.getElementById('imageInput').files = files;
+        previewImage({ target: { files: files } });
+      }
+    });
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      selectedFile = file;
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("preview").innerHTML = `
+            <button class="remove-btn" onclick="removeImage(event)">×</button>
+            <img src="${e.target.result}" alt="Selected Image" class="preview-img">
+          `;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removeImage(event) {
+      event.stopPropagation();
+      selectedFile = null;
+      document.getElementById('preview').innerHTML = '';
+      document.getElementById('imageInput').value = '';
+    }
+
+    function formatValue(value) {
+      if (value === null || value === undefined || value === '') {
+        return 'Not available';
+      }
+      return value;
+    }
+
+    async function uploadImage() {
+      if (!selectedFile) {
+        alert("Please select an image first!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const resultsContainer = document.getElementById("results-container");
+      const predictBtn = document.getElementById("predictBtn");
+      
+      resultsContainer.innerHTML = `
+        <div class="loading-card">
+          <div class="spinner"></div>
+          <div class="loading-text">Analyzing image and fetching breed information...</div>
+        </div>
+      `;
+      predictBtn.disabled = true;
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/predict/", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.detail || "Prediction failed");
+        }
+
+        const data = await res.json();
+
+        if (!data.success || !data.data) {
+          throw new Error("Invalid response format");
+        }
+
+        displayResults(data);
+      } catch (error) {
+        resultsContainer.innerHTML = `
+          <div class="error-card">
+            <h3 style="margin-bottom: 10px;">⚠ Error</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      } finally {
+        predictBtn.disabled = false;
+      }
+    }
+
+    function displayResults(data) {
+      const breed = data.data.breed;
+      const economic = data.data.economic_usage;
+      const physical = data.data.physical_characteristics;
+      const production = data.data.production_data;
+      const reproduction = data.data.reproduction_health;
+
+      let html = '';
+
+      // Confidence
+      if (data.confidence !== undefined) {
+        const confidencePercent = (data.confidence * 100).toFixed(1);
+        html += `
+          <div class="result-card">
+            <h2>🎯 Prediction Result</h2>
+            <div style="text-align: center;">
+              <div class="confidence-badge">
+                ${confidencePercent}% Confident
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Breed Info
+      if (breed) {
+        html += `
+          <div class="result-card">
+            <h2>🐮 ${formatValue(breed.breed_name)}</h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <strong>Animal Type</strong>
+                <span>${formatValue(breed.animal_type)}</span>
+              </div>
+              <div class="info-item">
+                <strong>Origin Country</strong>
+                <span>${formatValue(breed.origin_country)}</span>
+              </div>
+              <div class="info-item">
+                <strong>Origin State</strong>
+                <span>${formatValue(breed.origin_state)}</span>
+              </div>
+              <div class="info-item">
+                <strong>Origin Region</strong>
+                <span>${formatValue(breed.origin_region)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Economic Usage
+      if (economic) {
+        html += `<div class="result-card"><h2>💼 Economic Usage</h2><div class="info-grid">`;
+        Object.keys(economic).forEach(key => {
+          if (key !== 'breed_id') {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            html += `
+              <div class="info-item">
+                <strong>${label}</strong>
+                <span>${formatValue(economic[key])}</span>
+              </div>
+            `;
+          }
+        });
+        html += `</div></div>`;
+      }
+
+      // Physical Characteristics
+      if (physical) {
+        html += `<div class="result-card"><h2>📏 Physical Characteristics</h2><div class="info-grid">`;
+        Object.keys(physical).forEach(key => {
+          if (key !== 'breed_id') {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            html += `
+              <div class="info-item">
+                <strong>${label}</strong>
+                <span>${formatValue(physical[key])}</span>
+              </div>
+            `;
+          }
+        });
+        html += `</div></div>`;
+      }
+
+      // Production Data
+      if (production) {
+        html += `<div class="result-card"><h2>🥛 Production Data</h2><div class="info-grid">`;
+        Object.keys(production).forEach(key => {
+          if (key !== 'breed_id') {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            html += `
+              <div class="info-item">
+                <strong>${label}</strong>
+                <span>${formatValue(production[key])}</span>
+              </div>
+            `;
+          }
+        });
+        html += `</div></div>`;
+      }
+
+      // Reproduction & Health
+      if (reproduction) {
+        html += `<div class="result-card"><h2>🔬 Reproduction & Health</h2><div class="info-grid">`;
+        Object.keys(reproduction).forEach(key => {
+          if (key !== 'breed_id') {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            html += `
+              <div class="info-item">
+                <strong>${label}</strong>
+                <span>${formatValue(reproduction[key])}</span>
+              </div>
+            `;
+          }
+        });
+        html += `</div></div>`;
+      }
+
+      document.getElementById("results-container").innerHTML = html;
+    }
+  </script>
+  
+   <!-- Google Translate Dropdown -->
+   <div id="google_translate_element" style="position: absolute; top: 20px; right: 20px;"></div>
+
+   <script type="text/javascript">
+   function googleTranslateElementInit() {
+     new google.translate.TranslateElement(
+       {
+         pageLanguage: 'en',
+         includedLanguages: 'en,hi,ta,te,ml,kn,gu,mr,pa,bn,ur,as,ne,fr,de,es,ar', // Add any languages you want
+         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+       },
+       'google_translate_element'
+     );
+   }
+   </script>
+
+   <script type="text/javascript" 
+   src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+   </script>
+</body>
+</html>
